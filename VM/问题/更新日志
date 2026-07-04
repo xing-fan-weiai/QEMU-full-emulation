@@ -1,1 +1,79 @@
+ACPI.v0.04.7z 
+更新到	qemu-10.2.3
+更新	#Debian的源码镜像地址 	DEB=？？
+
+
+ACPI.v0.05.7z		//	2026年 06月 03日
+更新到	qemu-11.0.1
+重写	配置BIOS.sh
+新建目录	VM/问题/
+
+更新到	内核linux-7.0.10
+适配内核linux-7.0.10	kernel-patch-6.8.0-65.patch >> 内核补丁[Intel].patch
+
+适配qemu-11.0.1	[ACPI-SMBIOS]补丁.patch
+适配qemu-11.0.1	qemu-10.2.2.patch >> qemu-11.0.1.patch		删除了修改	//	diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+
+
+
+ACPI.v0.06.7z		//	2026年 06月 05日
+更新	开发.sh
+修复偏移		qemu-11.0.1.patch
+修复偏移	[ACPI-SMBIOS]补丁.patch	//	修改/hw/i386/acpi-build.c		build_waet >> build_wsmt
+
+模板.xml
+//	pc-q35-10.2 >> q35	/* 应该自动最新 */
+//	添加e1000e网络	/* 链接状态不活动*/
+
+评价 ： 小修更多是补全， 对全仿真没什么帮助
+
+
+未定	//	2026年 06月 12日
+内核修改.sh		#更换计时器	kernel-patch-6.8.0-65.patch >> 内核补丁[Intel].patch
+
+配置BIOS.sh
+/*
+	<disk type="file" device="disk">"/>
+	+ <source file="/var/lib/libvirt/images/win10.qcow2"/>
+	<target dev="sdb" bus="sata"/>
+	<serial>??</serial>
+	<product>??</product>
+	+ </disk>
+*/
+#序列号颜色	YELLOW >> RED
+
+
+未定	//	2026年 06月 14日
+内核修改.sh	
+	+ TIME=$(echo "$cpu_MHz/2" | bc)
+	+ #更换计时器逻辑修改	现支持各种CPU频率
+
+
+未定	//	2026年 06月 18日
+准备工作.sh
+	#查看显卡ID	// sed逻辑修改
+	- ID0=$(lspci -nn | grep 01:00.0 | sed -e 's/.*\] \[//g' -e 's/].*//g')
+	+ ID0=$(lspci -nn | grep 01:00.0 | sed -e 's/.*\[1002:/1002:/g' -e 's/].*//g')
+
+
+重大更新--ACPI.v0.07.7z		//	2026年 06月 29日	pafish[全过] // al-khaser[剩余2项] // vmaware[剩余11项]
+	准备工作.sh		添加#当前系统完整SMBIOS表和AppArmor配置文件
+
+	配置BIOS.sh	添加注释说明XML配置SMBIOS暂时无用
+
+模板.xml
+	添加注释XML配置SMBIOS暂时无用
+
+	- edk2-x86_64-secure-code.fd
+	+ OVMF_CODE_4M.ms.fd
+
+	+<qemu:arg value='-smbios'/>
+	+<qemu:arg value='file=/home/user/smbios.bin'/>
+
+	QEMU修改.sh	适配qemu-11.0.2
+
+	开发.sh		+ patch -p1 < ../../../[ACPI-SMBIOS]补丁.patch
+
+评价 ： 其实也只是添加了smbios.bin[二进制SMBIOS表]	但这样XML也不能配置SMBIOS了
+应该是暂时的 我再慢慢改吧 不是很想改源代码.......
 

@@ -1,0 +1,22 @@
+sudo qemu-img resize ??/vol.qcow2 ??G
+更改VM磁盘大小
+
+cat /proc/sys/kernel/random/uuid
+随机uuid
+
+sudo virsh define ？？/VM/模板.xml
+更快的创建虚拟机不用一步步创建
+
+sudo apt install ibus ibus-pinyin
+安装ibus中文输入法
+
+sudo apt install xrdp
+安装xrdp可在VM中连接图形桌面
+
+sudo adduser xrdpuser
+添加xrdpuser用户用于连接
+
+sudo usermod -aG sudo xrdpuser
+添加sudo权限
+
+
