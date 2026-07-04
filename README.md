@@ -1,5 +1,5 @@
 # QEMU虚拟机全仿真	 全过[pafish](https://github.com/a0rtega/pafish)测试	[al-khaser](https://github.com/ayoubfaouzi/al-khaser)[剩余2项]
-## 	作者 / 刑犯	X/@snhahx
+## 	作者 / [刑犯](https://x.com/snhahx)
 ### 灵感启发[記得晚安JDWA](https://space.bilibili.com/3546570985311169)
  > ##### 目录结构	虚拟机过测试/
  >> ##### 内核修改.sh	通过	//	(rdtsc) forcing VM exit	测试
@@ -114,7 +114,7 @@ sudo bash install_hooks.sh
 ![这是图片](补丁/截图/unknown_2026.05.22.png "win10 VM")
 
 - 为了爱
-  > 刑犯	X/@snhahx  已完整测试2026-06-29  
+  > [刑犯](https://x.com/snhahx)  已完整测试2026-06-29  
   > Debian13系统\[13.5.0]  
   > Intel处理器\[i5-8400]  AMD显卡\[vega 56]  win10虚拟机\[LTSC-2019]  
   > 项目围绕Intel处理器  
