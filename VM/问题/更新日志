@@ -77,3 +77,40 @@ ACPI.v0.06.7z		//	2026年 06月 05日
 评价 ： 其实也只是添加了smbios.bin[二进制SMBIOS表]	但这样XML也不能配置SMBIOS了
 应该是暂时的 我再慢慢改吧 不是很想改源代码.......
 
+
+
+
+ACPI.v0.08.7z		//	2026年 07月 12日
+	补丁/	增加目录 QEMU-Patch/	#放QEMU补丁
+	+ QMP-MB.sh	#监听鼠标通过 QMP发送
+
+	VM/测试/	增加目录 操作鼠标/	#放鼠标宏
+	+  播放.sh	#播放宏
+	+  录制.sh	#录制宏
+	+  写入鼠标演示.c	#直接写入鼠标操作
+
+	QEMU修改.sh	适配目录 QEMU-Patch/	增加#删除QEMU[编译后无用目录]
+
+	准备工作.sh		适配目录 QEMU-Patch/	增加#将当前用户添加到input用户组		增加#设置开机自启QMP转发鼠标
+
+	钩子脚本/hooks/qemu	增加systemctl restart QMP-MB.service	#每次win10虚拟机开机重启
+
+	VM/模板.xml	增加TCP	QMP		增加usb鼠标	删除ps2鼠标		适配目录 QEMU-Patch/
+	- <input type="mouse" bus="ps2"/>
+	- <input type="keyboard" bus="ps2"/>
+	+ <input type="mouse" bus="usb"/>
+
+	+ <ps2 state="off"/>	
+
+	- <qemu:arg value='file=/home/user/smbios.bin'/>
+	+ <qemu:arg value='file=/home/??username/QEMU-Patch/smbios.bin'/>
+
+	+ <qemu:arg value="-qmp"/>
+	+ <qemu:arg value="tcp:127.0.0.1:4444,server,nowait,nodelay"/>
+
+
+
+
+
+
+
