@@ -117,11 +117,29 @@ update-grub
 
 
 #当前系统完整SMBIOS表
-dmidecode --dump-bin /home/$username/smbios.bin
+dmidecode --dump-bin /home/$username/QEMU-Patch/smbios.bin
 
 #AppArmor配置文件
-echo "  /home/$username/smbios.bin r,"  >> /etc/apparmor.d/abstractions/libvirt-qemu
+echo "  /home/$username/QEMU-Patch/smbios.bin r,"  >> /etc/apparmor.d/abstractions/libvirt-qemu
 apparmor_parser -r /etc/apparmor.d/libvirt/TEMPLATE.qemu
+
+
+#将当前用户添加到input用户组
+usermod -a -G input $username
+
+#设置开机自启QMP转发鼠标
+echo "
+[Unit]
+Description=QMP转发鼠标
+[Service]
+User=root
+ExecStart=bash /home/$username/QEMU-Patch/QMP-MB.sh
+[Install]
+WantedBy=multi-user.target " > /etc/systemd/system/QMP-MB.service
+systemctl enable QMP-MB.service
+
+
+
 
 
 
