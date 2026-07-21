@@ -50,6 +50,10 @@ uname -r
 **更改CPU=??**  
 **更改GPU=??**  
 
+- /补丁
+  > 复制QEMU-Patch/补丁目录  
+  > 到 /home/你的用户名/ 
+
 ```
 sudo su	#root用户执行
 bash /准备工作.sh
@@ -63,15 +67,23 @@ y安装, 直接按俩下回车
 **更改username=??**
 
 - /补丁
-  > 复制补丁qemu-11.0.1.patch  
-  > 复制补丁\[ACPI-SMBIOS]补丁.patch  
+  > 复制QEMU-Patch/补丁目录  
   > 复制qemu-11.0.2.tar.xz源码压缩包	//	[qemu源码](https://www.qemu.org/)   
   > 到 /home/你的用户名/  
 
 ```
+#普通用户执行
 bash /QEMU修改.sh
 
 y安装编译QEMU依赖, sudo密码
+```
+
+## **QMP鼠标转发** 打开<QMP-MB.sh>更改设置
+
+**更改DEV=??**  
+
+```
+监听鼠标通过 QMP发送，不用添加鼠标，不用直通鼠标
 ```
 
 ## **创建并配置虚拟机** 打开虚拟系统管理器
@@ -89,14 +101,6 @@ sudo bash /配置BIOS.sh
 /*	*	*	XML配置SMBIOS暂时无用	*	*/
 ```
 
-## **QMP鼠标转发** 打开<QMP-MB.sh>更改设置
-
-**更改DEV=??**  
-
-```
-监听鼠标通过 QMP发送，不用添加鼠标，不用直通鼠标
-```
-
 ## **准备显卡直通** 打开VM操作系统
 
 ```
@@ -107,7 +111,7 @@ sudo bash /配置BIOS.sh
 关闭VM操作系统
 
 管理器添加硬件
-USB主机设备，添加键盘、耳机等USB设备
+USB主机设备，仅添加键盘设备
 PCI主机设备，找显卡如01:00:0,  03:00:0
 不要添加显卡功能[通常是HDMI音频]如01:00:1, 03:00:1  后缀:1 不要添加
 
@@ -122,8 +126,8 @@ sudo bash install_hooks.sh
 ![这是图片](补丁/截图/unknown_2026.05.22.png "win10 VM")
 
 - 为了爱
-  > [刑犯](https://x.com/snhahx)  已完整测试2026-06-29  
-  > Debian13系统\[13.5.0]  
+  >  已完整测试2026-07-22  
+  > Debian13系统\[13.6.0]  
   > Intel处理器\[i5-8400]  AMD显卡\[vega 56]  win10虚拟机\[LTSC-2019]  
   > 项目围绕Intel处理器  
 

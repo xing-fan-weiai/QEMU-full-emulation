@@ -46,6 +46,9 @@ if [ $GPU == 1 ]; then echo_gpu="\e[1;32mNVIDIA显卡$RES" ;else echo_gpu="\e[1;
 if [ $sources == 1 ]; then echo_sources="$GREEN是$RES" ;else echo_sources="$PINK否$RES" ;fi
 echo -e "  当前用户名字 :$YELLOW$username$RES	是否配置软件包源 :$echo_sources\n  当前设备配置\n  处理器=$echo_cpu 显卡=$echo_gpu\n"
 
+if test -e /home/$username/QEMU-Patch/;then echo -e "[补丁目录存在]"
+else echo -e "补丁目录不存在   复制QEMU-Patch/补丁目录到 /home/$username/ \n";exit 1;fi
+
 if [[ $EUID -ne 0 ]]; then echo -e "	用户权限不够,root用户执行\n" 1>&2;exit 1;fi
 echo -e "\n安装虚拟机";sleep 1
 
@@ -57,7 +60,7 @@ deb-src $DEB/debian testing main contrib non-free" > /etc/apt/sources.list ;fi
 
 #安装所需的虚拟化软件包：
 apt update
-apt install qemu-system-x86 libvirt-clients virt-manager hdparm ssh
+apt install qemu-system-x86 libvirt-clients virt-manager hdparm ssh evtest
 
 
 #将当前用户添加到libvirt和kvm用户组
@@ -119,10 +122,14 @@ update-grub
 #当前系统完整SMBIOS表
 dmidecode --dump-bin /home/$username/QEMU-Patch/smbios.bin
 
+#libvirt配置文件
+sed -i "s/#user = \"libvirt-qemu\"/user = \"$username\"/g" /etc/libvirt/qemu.conf
+systemctl restart libvirtd
+
 #AppArmor配置文件
 echo "  /home/$username/QEMU-Patch/smbios.bin r,"  >> /etc/apparmor.d/abstractions/libvirt-qemu
+echo "  /usr/share/pipewire/client.conf r,"  >> /etc/apparmor.d/abstractions/libvirt-qemu
 apparmor_parser -r /etc/apparmor.d/libvirt/TEMPLATE.qemu
-
 
 #将当前用户添加到input用户组
 usermod -a -G input $username
@@ -137,8 +144,6 @@ ExecStart=bash /home/$username/QEMU-Patch/QMP-MB.sh
 [Install]
 WantedBy=multi-user.target " > /etc/systemd/system/QMP-MB.service
 systemctl enable QMP-MB.service
-
-
 
 
 

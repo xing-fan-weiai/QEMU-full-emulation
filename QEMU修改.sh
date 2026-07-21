@@ -54,7 +54,11 @@ fi
 #安装编译QEMU依赖
 if [ $QEMU_YL == 1 ]; then
 sudo apt update
-sudo apt install python3-venv libusb-1.0-0-dev ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev
+sudo apt install libpipewire-0.3-dev python3-venv libusb-1.0-0-dev ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev
+
+#普通用户身份执行	强制 PipeWire 随用户实例自启
+loginctl enable-linger
+systemctl --user enable --now pipewire pipewire-pulse
 fi
 
 
@@ -75,6 +79,6 @@ make -j$(nproc)
 sudo make install -j$(nproc)
 
 #删除QEMU[编译后无用目录]
-rm -r /home/$username/qemu-11.0.2/
+sudo rm -r /home/$username/qemu-11.0.2/
 
 
