@@ -19,4 +19,10 @@ sudo adduser xrdpuser
 sudo usermod -aG sudo xrdpuser
 添加sudo权限
 
+sudo mousepad /var/log/libvirt/qemu/win10.log
+虚拟机日志
+
+
+
+
 
