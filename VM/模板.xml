@@ -108,17 +108,17 @@
     <controller type="pci" index="0" model="pcie-root"/>
     <controller type="pci" index="1" model="pcie-root-port">
       <model name="ioh3420"/>
-      <target chassis="1" port="0x8"/>
+      <target chassis="1" port="0x8" hotplug="off"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0" multifunction="on"/>
     </controller>
     <controller type="pci" index="2" model="pcie-root-port">
       <model name="ioh3420"/>
-      <target chassis="2" port="0x9"/>
+      <target chassis="2" port="0x9" hotplug="off"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x1"/>
     </controller>
     <controller type="pci" index="3" model="pcie-root-port">
       <model name="ioh3420"/>
-      <target chassis="3" port="0xa"/>
+      <target chassis="3" port="0xa" hotplug="off"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x2"/>
     </controller>
     <controller type="usb" index="0" model="nec-xhci" ports="15">
@@ -133,7 +133,8 @@
       <link state="down"/>
     </interface>
     <input type="mouse" bus="usb"/>
-    <audio id="1" type="none"/>
+    <sound model="ich9"/>
+    <audio id="1" type="pipewire"/>
     <watchdog model="itco" action="reset"/>
     <memballoon model="none"/>
     <iommu model="intel">
@@ -159,5 +160,6 @@
     <qemu:arg value="host,family=6,model=158,stepping=10,model_id=Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz,+l3-cache,rdtscp=off,hv_time,kvm=off,hv_vendor_id=null,-hypervisor,+vmx,+invtsc,vmware-cpuid-freq=false,enforce=false,host-phys-bits=true"/>
     <qemu:arg value="-machine"/>
     <qemu:arg value="q35,kernel_irqchip=split"/>
+    <qemu:env name="PIPEWIRE_REMOTE" value="/run/user/1000/pipewire-0"/>
   </qemu:commandline>
 </domain>
